@@ -1,0 +1,57 @@
+# Schema example for fold 1. Replace paths and record the actual independent template.
+dataset: srpbs
+source_field: ATT
+target_field: KUT
+modality: T1W
+protocol: holdout
+train:
+- '0001'
+- '0002'
+- '0003'
+validation:
+- '0004'
+- '0005'
+- '0006'
+pairs:
+  '0001':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0001.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0001.nii.gz
+  '0003':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0003.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0003.nii.gz
+  '0004':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0004.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0004.nii.gz
+  0008:
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0008.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0008.nii.gz
+  0009:
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0009.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0009.nii.gz
+  '0002':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0002.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0002.nii.gz
+  '0005':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0005.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0005.nii.gz
+  '0006':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0006.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0006.nii.gz
+  '0007':
+    source: ${MULTIQ_DATA}/srpbs/Images/T1W/ATT/P_T1W_ATT_0007.nii.gz
+    target: ${MULTIQ_DATA}/srpbs/Images/T1W/KUT/P_T1W_KUT_0007.nii.gz
+references:
+- subject: '0715'
+  path: ${MULTIQ_DATA}/srpbs/Reference/T1W/KUT/R_T1W_KUT_0715.nii.gz
+- subject: '0716'
+  path: ${MULTIQ_DATA}/srpbs/Reference/T1W/KUT/R_T1W_KUT_0716.nii.gz
+preprocessing:
+  status: ready
+  population_used_for_base_normalization: false
+  steps:
+  - Replace with the actual preprocessing history of these prepared images
+  template_independent: true
+test:
+- '0007'
+- 0008
+- 0009

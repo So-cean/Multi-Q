@@ -1,0 +1,184 @@
+{
+  "profile": "mrixfields_n4clean_base_early_stopping",
+  "source_sha256": "009158e14bc6d617f8f4c90359f1431b99e92cd828736743a124d4971c942f64",
+  "source_recipe": {
+    "experiment": {
+      "seed": 2026
+    },
+    "data": {
+      "split": "Images",
+      "target_field": "7T",
+      "source_intensity": {
+        "method": "reference_quantile_scale",
+        "histogram_stride": 4,
+        "foreground_threshold": 0.0,
+        "clip_output": false,
+        "quantiles": [
+          0.05,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.95
+        ],
+        "scale_range": [
+          0.25,
+          4.0
+        ]
+      },
+      "target_normalization": {
+        "method": "reference_quantile_scale",
+        "source_channel": 0,
+        "quantiles": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "scale_range": [
+          0.25,
+          4.0
+        ],
+        "foreground_threshold": 0.0,
+        "slice_range": null,
+        "slice_axis": 2,
+        "clip_output": false
+      },
+      "sampling_source_channel": 0,
+      "training_pair_mask": "intersection",
+      "training_pair_mask_source_channel": 0,
+      "inference_support_mask": "source",
+      "support_mask_source_channel": 0,
+      "patch_size": [
+        96,
+        96,
+        96
+      ],
+      "patches_per_subject": 256,
+      "edge_probability": 0.5,
+      "foreground_probability": 0.4,
+      "foreground_threshold": 0.0,
+      "spatial_flip_augmentation": "flip8",
+      "subject_balanced_batches": true,
+      "num_workers": 0
+    },
+    "model": {
+      "architecture": "unetpp",
+      "in_channels": 1,
+      "out_channels": 1,
+      "base_channel": 0,
+      "base_channels": 32,
+      "levels": 5,
+      "blocks_per_level": 2,
+      "norm_groups": 1,
+      "use_coordinates": true,
+      "use_global_intensity": false,
+      "output_mode": "logit_residual",
+      "residual_scale": 1.0,
+      "logit_epsilon": 0.001,
+      "zero_initialize_residual": true,
+      "require_support_mask": true,
+      "activation_checkpointing": false
+    },
+    "loss": {
+      "l1_weight": 1.0,
+      "mse_weight": 0.5,
+      "ssim_weight": 2.0,
+      "gradient_weight": 0.1,
+      "high_frequency_weight": 0.05,
+      "foreground_weight": 0.0,
+      "ssim_window": 11,
+      "ssim_spatial_dims": 2,
+      "ssim_data_range": 1.0,
+      "target_normalization": "none",
+      "mask_to_output_support": false
+    },
+    "training": {
+      "epochs": 120,
+      "batch_size": 4,
+      "gradient_accumulation_steps": 2,
+      "learning_rate": 0.0002,
+      "weight_decay": 1e-05,
+      "fused_optimizer": true,
+      "grad_clip_norm": 1.0,
+      "amp": true,
+      "amp_dtype": "bfloat16",
+      "ema_decay": 0.995,
+      "residual_gate_lr_multiplier": 0.25,
+      "save_every": 1000,
+      "save_last_every": 5
+    },
+    "logging": {
+      "step_every": 16,
+      "visualize_every_steps": 128
+    },
+    "validation": {
+      "patch_size": [
+        96,
+        96,
+        96
+      ],
+      "overlap": 0.5,
+      "sliding_window_batch_size": 4,
+      "every": 5,
+      "patience": 12,
+      "min_delta": 0.0001,
+      "before_training": true,
+      "monitor": "ssim",
+      "guard_monitor": "full_ssim",
+      "guard_tolerance": 0.002,
+      "full_volume_metrics": true,
+      "slice_axis": 2,
+      "slice_range": [
+        150,
+        180
+      ],
+      "save_prediction_slab": true
+    },
+    "inference": {
+      "sliding_window_batch_size": 32
+    }
+  },
+  "approved_changes": [
+    "Remove discarded unused parent-network initialization",
+    "SRPBS scoring uses prepared target, full volume, fixed source-target foreground intersection",
+    "Disable training spatial flips: spatial_flip_augmentation=none (user instruction)",
+    "Inference TTA remains none (user instruction)"
+  ],
+  "data_adapter_fields": [
+    "root",
+    "split",
+    "modality",
+    "source_field",
+    "target_field",
+    "subject_ids",
+    "reference_path",
+    "raw_target_dir",
+    "canonical_target_dir",
+    "spatial template"
+  ],
+  "invariant_fields": {
+    "data": [
+      "patches_per_subject",
+      "patch_size",
+      "edge_probability",
+      "foreground_probability",
+      "training_pair_mask"
+    ],
+    "sections": [
+      "model",
+      "loss",
+      "training"
+    ]
+  }
+}

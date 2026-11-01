@@ -1,0 +1,35 @@
+# Schema example only. Replace image paths and supply ALL independently eligible reference subjects.
+# Use tools/import_prepared.py for real data; these two reference entries are illustrative.
+# This is one outer fold. Rotate 0006/0007/0009 as test for the complete three-fold experiment.
+dataset: mrixfields
+source_field: 3T
+target_field: 7T
+modality: T1W
+protocol: heldout_validation
+train:
+- '0006'
+- '0007'
+validation:
+- 0009
+pairs:
+  '0006':
+    source: ${MULTIQ_DATA}/mrixfields/Images/T1W/3T/P_T1W_3T_0006.nii.gz
+    target: ${MULTIQ_DATA}/mrixfields/Images/T1W/7T/P_T1W_7T_0006.nii.gz
+  '0007':
+    source: ${MULTIQ_DATA}/mrixfields/Images/T1W/3T/P_T1W_3T_0007.nii.gz
+    target: ${MULTIQ_DATA}/mrixfields/Images/T1W/7T/P_T1W_7T_0007.nii.gz
+  0009:
+    source: ${MULTIQ_DATA}/mrixfields/Images/T1W/3T/P_T1W_3T_0009.nii.gz
+    target: ${MULTIQ_DATA}/mrixfields/Images/T1W/7T/P_T1W_7T_0009.nii.gz
+references:
+- subject: '0100'
+  path: ${MULTIQ_DATA}/mrixfields/Reference/T1W/7T/R_T1W_7T_0100.nii.gz
+- subject: '0101'
+  path: ${MULTIQ_DATA}/mrixfields/Reference/T1W/7T/R_T1W_7T_0101.nii.gz
+preprocessing:
+  status: ready
+  population_used_for_base_normalization: false
+  steps:
+  - Replace with the actual preprocessing history of these prepared images
+
+test: []

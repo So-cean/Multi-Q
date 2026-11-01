@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multiq-mri"
+version = "0.1.0"
+description = "Population-guided multi-quantile calibration for supervised MRI synthesis"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24", "nibabel>=5", "PyYAML>=6", "scipy>=1.10",
+  "scikit-image>=0.21", "Pillow>=9", "monai>=1.3", "lpips>=0.1.4",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["multiq*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
